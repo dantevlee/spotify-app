@@ -1,0 +1,40 @@
+.App{
+  font-size: 16px;
+  overflow: hidden;
+   
+  @media(max-width: 576px){
+    height: 100vh;
+  } 
+
+  main{
+    .header{
+      text-align: center;
+      p{
+          font-size:1.5rem;
+      }
+    }
+    background-color: #121212;
+    color: #b3b3b3;
+    padding: 2rem;
+    @media(min-width: 576px){
+        height: 100%;
+    }
+    @media(max-width: 576px){
+        height: 80%;
+    }
+  }
+
+  .app-row{
+    @media(min-width: 576px){
+      height: 100vh;
+    }
+    @media(max-width: 576px){
+      height: 100vh;
+      display: flex;
+      flex-direction: column-reverse;
+    } 
+      
+  }
+  
+
+}
