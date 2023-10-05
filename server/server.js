@@ -41,9 +41,6 @@ const refreshAccessTokenFromSpotify = async () => {
   }
 };
 
-
-
-
 app.get(`/api/random`, refreshAccessToken, async(req, res) => {
   
   const { id } = req.query;
@@ -61,25 +58,24 @@ app.get(`/api/random`, refreshAccessToken, async(req, res) => {
   }
 });
 
-// app.get("/api/search", async (req, res) => {
-//   const getToken = await generateToken();
-//   const token = getToken.access_token;
+app.get(`/api/search`, refreshAccessToken, async(req, res) => {
 
-//   try {
-//     const response = await axios({
-//       url: `https://api.spotify.com/v1/search?q=martin_garrix&type=artist&limit=5`,
-//       method: `GET`,
-//       headers: {
-//         Authorization: `Bearer ${token}`,
-//       },
-//     });
+  const {searchQuery} = req.query;
+  const {searchType} = req.query;
 
-//     res.json(response.data);
-//   } catch (error) {
-//     console.error(error);
-//     res.status(500).json({ error: `Internal Server Error` });
-//   }
-// });
+  try {
+    const response = await axios.get(`https://api.spotify.com/v1/search?q=${searchQuery}&type=${searchType}&limit=5`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      }
+    });
+    res.json(response.data);
+  } catch (error) {
+    console.error('Error with searching:', error.message);
+    res.status(error.response?.status || 500).json({ error: 'Internal Server Error' })
+  }
+})
+
 
 app.get("/*", (req, res) =>
   res.sendFile(path.join(__dirname, "../client/build", "index.html"))
