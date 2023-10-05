@@ -1,4 +1,4 @@
-require('dotenv').config()
+require('dotenv').config();
 const express = require("express");
 const app = express();
 const path = require("path");
@@ -8,51 +8,78 @@ const cors = require('cors');
 
 app.use(cors());
 
-let token;
-
 app.use(express.static(path.join(__dirname, "../client/build")));
 
-app.get("/api/token", async (req, res) => {
-  const data = await generateToken();
-  res.json({ token: data.access_token });
-});
+let token;
 
-async function generateToken() {
-  if (token) return token;
+const refreshAccessToken = async (req, res, next) => {
+  if (!token) {
+    await refreshAccessTokenFromSpotify();
+  }
+  next();
+};
 
-  const response = await axios({
-    url: `https://accounts.spotify.com/api/token`,
-    method: `POST`,
-    data: `grant_type=client_credentials`,
-    auth: {
-      username: process.env.CLIENT_ID,
-      password: process.env.CLIENT_SECRET,
-    },
-  });
-  token = response.data;
-  console.log(response.data);
-  return token;
-}
+const refreshAccessTokenFromSpotify = async () => {
+  try {
+    const response = await axios.post(
+      'https://accounts.spotify.com/api/token',
+      new URLSearchParams({
+        grant_type: 'client_credentials',
+        client_id: process.env.REACT_APP_CLIENT_ID,
+        client_secret: process.env.REACT_APP_CLIENT_SECRET,
+      }),
+      {
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded',
+        },
+      }
+    );
 
-app.get("/api/search", async (req, res) => {
-  const getToken = await generateToken();
-  const token = getToken.access_token;
+    token = response.data.access_token;
+  } catch (error) {
+    console.error('Error refreshing access token:', error.message);
+  }
+};
+
+
+
+
+app.get(`/api/random`, refreshAccessToken, async(req, res) => {
+  
+  const { id } = req.query;
 
   try {
-    const response = await axios({
-      url: `https://api.spotify.com/v1/search?q=drake&type=artist&limit=5`,
-      method: `GET`,
+    const response = await axios.get(`https://api.spotify.com/v1/artists/${id}/top-tracks?market=us&limit=1`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
-
     res.json(response.data);
   } catch (error) {
-    console.error(error);
-    res.status(500).json({ error: `Internal Server Error` });
+    console.error('Error getting random song:', error.message);
+    res.status(error.response?.status || 500).json({ error: 'Internal Server Error' });
   }
 });
+
+// app.get("/api/search", async (req, res) => {
+//   const getToken = await generateToken();
+//   const token = getToken.access_token;
+
+//   try {
+//     const response = await axios({
+//       url: `https://api.spotify.com/v1/search?q=martin_garrix&type=artist&limit=5`,
+//       method: `GET`,
+//       headers: {
+//         Authorization: `Bearer ${token}`,
+//       },
+//     });
+
+//     res.json(response.data);
+//   } catch (error) {
+//     console.error(error);
+//     res.status(500).json({ error: `Internal Server Error` });
+//   }
+// });
 
 app.get("/*", (req, res) =>
   res.sendFile(path.join(__dirname, "../client/build", "index.html"))

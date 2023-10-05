@@ -2,9 +2,9 @@ import React from 'react';
 import {
     Link
 } from "react-router-dom";
-import { BiHomeAlt } from 'react-icons/bi';
+import { BiHomeAlt, BiMusic } from 'react-icons/bi';
 import { BiSearch } from 'react-icons/bi';
-import { VscLibrary } from 'react-icons/vsc';
+import { VscLibrary, VscNote } from 'react-icons/vsc';
 import '../styles/NavMenu.scss';
 
 const NavMenu = props => {
@@ -16,8 +16,8 @@ const NavMenu = props => {
             <Link to="/search">
                 <span className="route"><BiSearch /><span> Search</span></span>
             </Link>
-            <Link to="/library">
-                <span className="route"><VscLibrary /><span> Library</span></span>
+            <Link to="/random">
+                <span className="route"><BiMusic /><span> Songs</span></span>
             </Link>
         </nav>
     )
