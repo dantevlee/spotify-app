@@ -8,8 +8,6 @@ const cors = require('cors');
 
 app.use(cors());
 
-app.use(express.static(path.join(__dirname, "../client/build")));
-
 let token;
 
 const refreshAccessToken = async (req, res, next) => {
@@ -18,6 +16,8 @@ const refreshAccessToken = async (req, res, next) => {
   }
   next();
 };
+
+app.use(express.static(path.join(__dirname, "../client/build")));
 
 const refreshAccessTokenFromSpotify = async () => {
   try {
@@ -45,7 +45,7 @@ app.get('/api/refreshToken', refreshAccessToken, (req, res) => {
   res.json({ token });
 })
 
-app.get(`/api/random`, async(req, res) => {
+app.get(`/api/random`, refreshAccessToken, async(req, res) => {
   
   const { id } = req.query;
 
@@ -62,7 +62,7 @@ app.get(`/api/random`, async(req, res) => {
   }
 });
 
-app.get(`/api/search`, async(req, res) => {
+app.get(`/api/search`, refreshAccessToken, async(req, res) => {
 
   const {searchQuery} = req.query;
   const {searchType} = req.query;
