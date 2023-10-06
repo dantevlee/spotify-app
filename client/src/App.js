@@ -5,8 +5,30 @@ import NavMenu from "./Components/NavMenu";
 import HomePage from "./Components/HomePage";
 import RandomPage from "./Components/RandomPage";
 import Search from "./Components/Search";
+import { useEffect, useState } from "react";
 
 const App = () => {
+  const [token, setToken] = useState('');
+
+  useEffect(() => {
+    fetchToken();
+
+    const tokenRefreshInterval = setInterval(() => {
+      fetchToken();
+    }, 3600000);
+
+    return () => clearInterval(tokenRefreshInterval);
+  }, []);
+
+  const fetchToken = async () => {
+    try {
+      const response = await axios.get('/api/refreshToken'); // Add a new route on your server to 
+      setToken(response.data.token);
+    } catch (error) {
+      console.error('Error refreshing token:', error.message);
+    }
+  };
+
 
   return (
     <div className="App">

@@ -41,6 +41,10 @@ const refreshAccessTokenFromSpotify = async () => {
   }
 };
 
+app.get('/api/refreshToken', refreshAccessToken, (req, res) => {
+  res.json({ token });
+})
+
 app.get(`/api/random`, refreshAccessToken, async(req, res) => {
   
   const { id } = req.query;
