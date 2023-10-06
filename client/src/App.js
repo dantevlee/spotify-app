@@ -22,7 +22,7 @@ const App = () => {
 
   const fetchToken = async () => {
     try {
-      const response = await axios.get('/api/refreshToken'); // Add a new route on your server to 
+      const response = await axios.get('/api/refreshToken'); 
       setToken(response.data.token);
     } catch (error) {
       console.error('Error refreshing token:', error.message);

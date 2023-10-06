@@ -13,7 +13,7 @@ export const Artists = [
   },
   {
     id: "45eNHdiiabvmbp4erw26rg",
-    name: "Illenium",
+    name: "ILLENIUM",
     imageSrc:
       "https://i.scdn.co/image/ab6761610000f17881a0ab3a9a4326929a01b0f1",
   },
