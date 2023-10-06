@@ -15,10 +15,10 @@ const App = () => {
 
     const tokenRefreshInterval = setInterval(() => {
       fetchToken();
-    }, 3600000);
+    }, 3599000);
 
     return () => clearInterval(tokenRefreshInterval);
-  }, []);
+  }, [token]);
 
   const fetchToken = async () => {
     try {

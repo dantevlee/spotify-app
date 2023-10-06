@@ -3,7 +3,7 @@ import "../styles/SearchForm.scss";
 
 const SearchForm = ({
   handleSearch,
-  handleRadioInput,
+  handleSearchCriteria,
   handleUserInput,
   value,
 }) => {
@@ -27,6 +27,7 @@ const SearchForm = ({
         </div>
       </div>
       <div className="row" id="radio-buttons">
+        <h5>Search Criteria:</h5>
         <div className="form-check ">
           <input
             className="form-check-input"
@@ -34,7 +35,7 @@ const SearchForm = ({
             name="inlineRadioOptions"
             id="artistRadio"
             value="artist"
-            onChange={handleRadioInput}
+            onChange={handleSearchCriteria}
           />
           <label className="form-check-label" htmlFor="artistRadio">
             Artists
@@ -48,7 +49,7 @@ const SearchForm = ({
             name="inlineRadioOptions"
             id="songRadio"
             value="track"
-            onChange={handleRadioInput}
+            onChange={handleSearchCriteria}
           />
           <label className="form-check-label" htmlFor="songRadio">
             Songs
@@ -62,7 +63,7 @@ const SearchForm = ({
             name="inlineRadioOptions"
             id="albumRadio"
             value="album"
-            onChange={handleRadioInput}
+            onChange={handleSearchCriteria}
           />
           <label className="form-check-label" htmlFor="albumRadio">
             Albums

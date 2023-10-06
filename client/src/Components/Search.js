@@ -9,27 +9,27 @@ import { BiSolidMusic } from "react-icons/bi";
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
-  const [radioInput, setRadioInput] = useState("");
+  const [searchCriteria, setSearchCriteria] = useState("");
   const [error, setError] = useState("");
 
-  const handleRadioInput = (e) => {
+  const handleSearchCriteria = (e) => {
     setSearchResults([]);
-    setRadioInput(e.target.value);
+    setSearchCriteria(e.target.value);
   };
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
-    if (searchQuery.trim() === "" && radioInput.trim() === "") {
+    if (searchQuery.trim() === "" && searchCriteria.trim() === "") {
       setError(
-        "Please enter a value in the search field and select an option."
+        "Please enter a value in the search field and select a search criteria."
       );
       return;
     } else if (searchQuery.trim() === "") {
       setError("Please enter a value in the search field.");
       return;
-    } else if (radioInput.trim() === "") {
-      setError("Please select an option.");
+    } else if (searchCriteria.trim() === "") {
+      setError("Please select a search criteria.");
       return;
     }
 
@@ -37,16 +37,16 @@ const Search = () => {
 
     try {
       const response = await axios.get(
-        `https://spotify-app-rest.onrender.com/api/search?searchQuery=${searchQuery}&searchType=${radioInput}&limit=5`
+        `https://spotify-app-rest.onrender.com/api/search?searchQuery=${searchQuery}&searchType=${searchCriteria}&limit=5`
       );
 
-      if (radioInput === "artist") {
+      if (searchCriteria === "artist") {
         setSearchResults(response.data.artists.items);
       }
-      if (radioInput === "album") {
+      if (searchCriteria === "album") {
         setSearchResults(response.data.albums.items);
       }
-      if (radioInput === "track") {
+      if (searchCriteria === "track") {
         setSearchResults(response.data.tracks.items);
       }
     } catch (error) {
@@ -62,7 +62,7 @@ const Search = () => {
       return;
     }
 
-    if (radioInput === "artist") {
+    if (searchCriteria === "artist") {
       return searchResults.map((result, index) => {
         return (
           <Artist
@@ -77,13 +77,13 @@ const Search = () => {
       });
     }
 
-    if (radioInput === "album") {
+    if (searchCriteria === "album") {
       return searchResults.map((result) => {
         return <Album key={result.id} result={result} />;
       });
     }
 
-    if (radioInput === "track") {
+    if (searchCriteria === "track") {
       return <Song tracks={searchResults} />;
     }
 
@@ -96,7 +96,7 @@ const Search = () => {
         <SearchForm
           value={searchQuery}
           handleUserInput={(e) => setSearchQuery(e.target.value)}
-          handleRadioInput={handleRadioInput}
+          handleSearchCriteria={handleSearchCriteria}
           handleSearch={handleSearch}
         />
         {error && <p className="alert alert-danger mt-3" style={{width:'475px'}}>{error}</p>}

@@ -57,5 +57,10 @@ padding-left:0;
 
 #search-form input[type="radio"]:checked + label {
   color: #181818;
-  background-color: #fff;
+  background-color: whitesmoke;
+}
+
+h5{
+  margin-left: -10px; 
+  font-weight: bold;
 }
