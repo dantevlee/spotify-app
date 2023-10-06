@@ -45,7 +45,7 @@ app.get('/api/refreshToken', refreshAccessToken, (req, res) => {
   res.json({ token });
 })
 
-app.get(`/api/random`, refreshAccessToken, async(req, res) => {
+app.get(`/api/random`, async(req, res) => {
   
   const { id } = req.query;
 
@@ -62,7 +62,7 @@ app.get(`/api/random`, refreshAccessToken, async(req, res) => {
   }
 });
 
-app.get(`/api/search`, refreshAccessToken, async(req, res) => {
+app.get(`/api/search`, async(req, res) => {
 
   const {searchQuery} = req.query;
   const {searchType} = req.query;
