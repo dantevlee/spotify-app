@@ -12,10 +12,10 @@ export const Artists = [
       "https://i.scdn.co/image/ab6761610000f178214f3cf1cbe7139c1e26ffbb",
   },
   {
-    id: "6LuN9FCkKOj5PcnpouEgny",
-    name: "Khalid",
+    id: "45eNHdiiabvmbp4erw26rg",
+    name: "Illenium",
     imageSrc:
-      "https://i.scdn.co/image/ab6761610000f17831072db9da0311ecfabe96bf",
+      "https://i.scdn.co/image/ab6761610000f17881a0ab3a9a4326929a01b0f1",
   },
   {
     id: "0du5cEVh5yTK9QJze8zA0C",

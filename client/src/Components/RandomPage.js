@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import '../styles/RandomPage.scss';
 import Artist from "./Artist";
 import axios from "axios";
 import { Artists } from "../Artists";
 import Song from "./Song";
+import { BiSolidMusic } from "react-icons/bi";
 
 const RandomPage = () => {
 
@@ -45,6 +46,7 @@ const RandomPage = () => {
       </div>
       <div className="favorites-row row">{renderArtists()}</div>
       <div className="random-song-row row">{renderRandomSong()}</div>
+      {renderRandomSong() && <h4><center>Click result to play some tunes! <BiSolidMusic /></center></h4>}
     </div>
   );
 };
