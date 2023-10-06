@@ -18,7 +18,7 @@ const App = () => {
     }, 3599000);
 
     return () => clearInterval(tokenRefreshInterval);
-  }, [token]);
+  }, []);
 
   const fetchToken = async () => {
     try {
