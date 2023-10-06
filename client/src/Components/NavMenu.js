@@ -4,7 +4,6 @@ import {
 } from "react-router-dom";
 import { BiHomeAlt, BiMusic } from 'react-icons/bi';
 import { BiSearch } from 'react-icons/bi';
-import { VscLibrary, VscNote } from 'react-icons/vsc';
 import '../styles/NavMenu.scss';
 
 const NavMenu = props => {
