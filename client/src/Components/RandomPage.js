@@ -25,7 +25,7 @@ const RandomPage = () => {
 
   const getRandomSong = async (id) => {
     try {
-      const response = await axios.get(`https://spotify-app-rest.onrender.com/api/random?id=${id}`);
+      const response = await axios.get(`/api/random?id=${id}`);
       setRandomSong(response.data.tracks);
     } catch (err) {
       console.log(err);

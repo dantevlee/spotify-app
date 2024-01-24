@@ -5,10 +5,9 @@ import NavMenu from "./Components/NavMenu";
 import HomePage from "./Components/HomePage";
 import RandomPage from "./Components/RandomPage";
 import Search from "./Components/Search";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 const App = () => {
-  const [token, setToken] = useState('');
 
   useEffect(() => {
     fetchToken();
@@ -22,8 +21,7 @@ const App = () => {
 
   const fetchToken = async () => {
     try {
-      const response = await axios.get('/api/refreshToken'); 
-      setToken(response.data.token);
+      await axios.get('/api/refreshToken'); 
     } catch (error) {
       console.error('Error refreshing token:', error.message);
     }

@@ -3,7 +3,7 @@ const express = require("express");
 const app = express();
 const path = require("path");
 const axios = require("axios");
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 3001;
 const cors = require('cors');
 
 app.use(cors());
@@ -81,9 +81,9 @@ app.get(`/api/search`, refreshAccessToken, async(req, res) => {
 })
 
 
-app.get("/*", (req, res) =>
-  res.sendFile(path.join(__dirname, "../client/build", "index.html"))
-);
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname, '..', 'client', 'build', 'index.html'));
+});
 
 app.listen(port, () => {
   console.log(`Example app listening on port ${port}`);

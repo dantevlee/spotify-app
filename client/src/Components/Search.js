@@ -37,7 +37,7 @@ const Search = () => {
 
     try {
       const response = await axios.get(
-        `https://spotify-app-rest.onrender.com/api/search?searchQuery=${searchQuery}&searchType=${searchCriteria}&limit=5`
+        `/api/search?searchQuery=${searchQuery}&searchType=${searchCriteria}&limit=5`
       );
 
       if (searchCriteria === "artist") {

@@ -1,0 +1,23 @@
+{
+  "name": "spotify-app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "concurrently \"npm run start --prefix client\" \"npm run start --prefix server\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dantevlee/spotify-app.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dantevlee/spotify-app/issues"
+  },
+  "homepage": "https://github.com/dantevlee/spotify-app#readme",
+  "dependencies": {
+    "concurrently": "^8.2.2"
+  }
+}
