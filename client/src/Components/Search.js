@@ -37,7 +37,7 @@ const Search = () => {
 
     try {
       const response = await axios.get(
-        `/api/search?searchQuery=${searchQuery}&searchType=${searchCriteria}&limit=5`
+        `http://localhost:3001/api/search?searchQuery=${searchQuery}&searchType=${searchCriteria}&limit=5`
       );
 
       if (searchCriteria === "artist") {
