@@ -5,12 +5,15 @@ import Artist from "./Artist";
 import Album from "./Album";
 import Song from "./Song";
 import { BiSolidMusic } from "react-icons/bi";
+import { Alert } from 'react-bootstrap';
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState("");
   const [error, setError] = useState("");
+  const [visitCount, setVisitCount] = useState(1)
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
 
   const handleSearchCriteria = (e) => {
     setSearchResults([]);
@@ -19,6 +22,10 @@ const Search = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
+
+    if (visitCount === 1){
+      setIsInitialLoad(true)
+    }
 
     if (searchQuery.trim() === "" && searchCriteria.trim() === "") {
       setError(
@@ -37,7 +44,7 @@ const Search = () => {
 
     try {
       const response = await axios.get(
-        `https://spotify-app-rest.onrender.com/api/search?searchQuery=${searchQuery}&searchType=${searchCriteria}&limit=5`
+        `http://localhost:3001/api/search?searchQuery=${searchQuery}&searchType=${searchCriteria}&limit=5`
       );
 
       if (searchCriteria === "artist") {
@@ -54,6 +61,10 @@ const Search = () => {
         `There was an error when performing the search: ${error.response.data.error.message}`
       );
     }
+    setIsInitialLoad(false)
+      if (visitCount > 0){
+        setVisitCount(0)
+      }
     setSearchQuery("");
   };
 
@@ -90,8 +101,18 @@ const Search = () => {
     throw new Error("radio value is not valid");
   };
 
+  const removeNotification = () => {
+    setIsInitialLoad(false);
+    setVisitCount(0)
+  }
+
   return (
     <div className="container" id="search-page">
+         {isInitialLoad && (
+        <Alert variant="info" onClose={() => removeNotification()} dismissible>
+          This server is running on a free instance in the cloud that spins down if unused. It may take a few seconds for the first app initialization. Thank you for your patience!
+        </Alert>
+      )}
       <div className="search-row row">
         <SearchForm
           value={searchQuery}
