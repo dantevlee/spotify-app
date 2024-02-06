@@ -49,22 +49,31 @@ const Search = () => {
 
       if (searchCriteria === "artist") {
         setSearchResults(response.data.artists.items);
+        setIsInitialLoad(false)
+        if (visitCount > 0){
+          setVisitCount(0)
+        }
       }
       if (searchCriteria === "album") {
         setSearchResults(response.data.albums.items);
+        setIsInitialLoad(false)
+        if (visitCount > 0){
+          setVisitCount(0)
+        }
       }
       if (searchCriteria === "track") {
         setSearchResults(response.data.tracks.items);
+        setIsInitialLoad(false)
+        if (visitCount > 0){
+          setVisitCount(0)
+        }
       }
     } catch (error) {
       setError(
         `There was an error when performing the search: ${error.response.data.error.message}`
       );
     }
-    setIsInitialLoad(false)
-      if (visitCount > 0){
-        setVisitCount(0)
-      }
+   
     setSearchQuery("");
   };
 
