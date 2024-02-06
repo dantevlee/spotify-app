@@ -13,11 +13,7 @@ const Search = () => {
   const [searchCriteria, setSearchCriteria] = useState("");
   const [error, setError] = useState("");
   const [visitCount, setVisitCount] = useState(1)
-  const [isInitialLoad, setIsInitialLoad] = useState(true);
-
-  useEffect(() =>{
-      setIsInitialLoad(!isInitialLoad)
-  }, [])
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
 
   const handleSearchCriteria = (e) => {
     setSearchResults([]);
