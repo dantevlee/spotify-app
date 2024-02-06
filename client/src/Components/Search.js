@@ -5,15 +5,13 @@ import Artist from "./Artist";
 import Album from "./Album";
 import Song from "./Song";
 import { BiSolidMusic } from "react-icons/bi";
-import { Alert } from 'react-bootstrap';
+import { Alert } from "react-bootstrap";
 
-const Search = () => {
+const Search = ({visitCount, isInitialLoad}) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
   const [searchCriteria, setSearchCriteria] = useState("");
   const [error, setError] = useState("");
-  const [visitCount, setVisitCount] = useState(1)
-  const [isInitialLoad, setIsInitialLoad] = useState(false);
 
   const handleSearchCriteria = (e) => {
     setSearchResults([]);
@@ -22,9 +20,10 @@ const Search = () => {
 
   const handleSearch = async (e) => {
     e.preventDefault();
-
-    if (visitCount === 1){
-      setIsInitialLoad(true)
+   
+    if (visitCount === 1) {
+      isInitialLoad = true
+      visitCount = 0;
     }
 
     if (searchQuery.trim() === "" && searchCriteria.trim() === "") {
@@ -49,31 +48,22 @@ const Search = () => {
 
       if (searchCriteria === "artist") {
         setSearchResults(response.data.artists.items);
-        setIsInitialLoad(false)
-        if (visitCount > 0){
-          setVisitCount(0)
-        }
+        isInitialLoad = false;
       }
       if (searchCriteria === "album") {
         setSearchResults(response.data.albums.items);
-        setIsInitialLoad(false)
-        if (visitCount > 0){
-          setVisitCount(0)
-        }
+        isInitialLoad = false;
       }
       if (searchCriteria === "track") {
         setSearchResults(response.data.tracks.items);
-        setIsInitialLoad(false)
-        if (visitCount > 0){
-          setVisitCount(0)
-        }
+        isInitialLoad = false;
       }
     } catch (error) {
       setError(
         `There was an error when performing the search: ${error.response.data.error.message}`
       );
     }
-   
+
     setSearchQuery("");
   };
 
@@ -111,15 +101,17 @@ const Search = () => {
   };
 
   const removeNotification = () => {
-    setIsInitialLoad(false);
-    setVisitCount(0)
-  }
+    isInitialLoad = false;
+    visitCount = 0;
+  };
 
   return (
     <div className="container" id="search-page">
-         {isInitialLoad && (
+      {isInitialLoad && (
         <Alert variant="info" onClose={() => removeNotification()} dismissible>
-          This server is running on a free instance in the cloud that spins down if unused. It may take a few seconds for the first app initialization. Thank you for your patience!
+          This server is running on a free instance in the cloud that spins down
+          if unused. It may take a few seconds for the first app initialization.
+          Thank you for your patience!
         </Alert>
       )}
       <div className="search-row row">
@@ -129,10 +121,20 @@ const Search = () => {
           handleSearchCriteria={handleSearchCriteria}
           handleSearch={handleSearch}
         />
-        {error && <p className="alert alert-danger mt-3" style={{width:'475px'}}>{error}</p>}
+        {error && (
+          <p className="alert alert-danger mt-3" style={{ width: "475px" }}>
+            {error}
+          </p>
+        )}
       </div>
       <div className="result-row row">{renderSearchResults()}</div>
-      {renderSearchResults() && <h4><center>Click on one of the results to play some tunes! <BiSolidMusic /></center></h4>}
+      {renderSearchResults() && (
+        <h4>
+          <center>
+            Click on one of the results to play some tunes! <BiSolidMusic />
+          </center>
+        </h4>
+      )}
     </div>
   );
 };

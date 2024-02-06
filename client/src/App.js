@@ -8,7 +8,9 @@ import Search from "./Components/Search";
 import { useEffect, useState } from "react";
 
 const App = () => {
-  const [token, setToken] = useState('');
+
+  const [visitCount, setVisitCount] = useState(1);
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
 
   useEffect(() => {
     fetchToken();
@@ -22,8 +24,7 @@ const App = () => {
 
   const fetchToken = async () => {
     try {
-      const response = await axios.get('/api/refreshToken'); 
-      setToken(response.data.token);
+     await axios.get('/api/refreshToken'); 
     } catch (error) {
       console.error('Error refreshing token:', error.message);
     }
@@ -39,7 +40,11 @@ const App = () => {
             <Routes>
               <Route exact path="/" element={<HomePage />} />
               <Route exact path="/spotify" element={<HomePage />} />
-              <Route exact path="/search" element={<Search />} />
+              <Route exact path="/search" element={
+              <Search 
+              visitCount= {visitCount}
+              isInitialLoad = {isInitialLoad}
+               />} />
               <Route exact path="/random" element={<RandomPage />} />
             </Routes>
           </main>
