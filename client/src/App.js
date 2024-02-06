@@ -9,9 +9,6 @@ import { useEffect, useState } from "react";
 
 const App = () => {
 
-  const [visitCount, setVisitCount] = useState(1);
-  const [isInitialLoad, setIsInitialLoad] = useState(false);
-
   useEffect(() => {
     fetchToken();
 
@@ -41,10 +38,7 @@ const App = () => {
               <Route exact path="/" element={<HomePage />} />
               <Route exact path="/spotify" element={<HomePage />} />
               <Route exact path="/search" element={
-              <Search 
-              visitCount= {visitCount}
-              isInitialLoad = {isInitialLoad}
-               />} />
+              <Search/>} />
               <Route exact path="/random" element={<RandomPage />} />
             </Routes>
           </main>
