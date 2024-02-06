@@ -30,7 +30,7 @@ const RandomPage = () => {
       setIsInitialLoad(true)
     }
     try {
-      const response = await axios.get(`http://localhost:3001/api/random?id=${id}`);
+      const response = await axios.get(`https://spotify-app-rest.onrender.com/api/random?id=${id}`);
       setRandomSong(response.data.tracks);
       setIsInitialLoad(false)
     } catch (err) {
