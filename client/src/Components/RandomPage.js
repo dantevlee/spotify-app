@@ -5,10 +5,12 @@ import axios from "axios";
 import { Artists } from "../Artists";
 import Song from "./Song";
 import { BiSolidMusic } from "react-icons/bi";
+import {Alert}  from 'react-bootstrap';
 
 const RandomPage = () => {
-
   const [randomSong, setRandomSong] = useState([]);
+  const [visitCount, setVisitCount] = useState(1)
+  const [isInitialLoad, setIsInitialLoad] = useState(false);
 
   const renderArtists = () => {
     return Artists.map((artist, index) => (
@@ -24,12 +26,19 @@ const RandomPage = () => {
   };
 
   const getRandomSong = async (id) => {
+    if (visitCount === 1){
+      setIsInitialLoad(true)
+    }
     try {
-      const response = await axios.get(`https://spotify-app-rest.onrender.com/api/random?id=${id}`);
+      const response = await axios.get(`http://localhost:3001/api/random?id=${id}`);
       setRandomSong(response.data.tracks);
+      setIsInitialLoad(false)
     } catch (err) {
       console.log(err);
       alert(`There was an error in the application: ${err.response.data.error.message}`);
+    }
+    if(visitCount > 0){
+      setVisitCount(0)
     }
   };
 
@@ -38,9 +47,19 @@ const RandomPage = () => {
     return randomSong.length > 0 ? <Song tracks={[randomSong[RNG]]} /> : null;
   };
 
+  const removeNotification = () => {
+    setIsInitialLoad(false);
+    setVisitCount(0)
+  }
+
 
   return (
     <div className="container random-container">
+          {isInitialLoad && (
+        <Alert variant="info" onClose={() => removeNotification()} dismissible>
+          This server is running on a free instance in the cloud that spins down if unused. It may take a few seconds for the first app initialization. Thank you for your patience!
+        </Alert>
+      )}
       <div className="row random-header header">
         <h2>Generate a song from one of these artists</h2>
       </div>
